@@ -1,0 +1,299 @@
+
+Variables primitivas son:
+	byte, short, int, long, char, float, double and bloolean
+Las variables primitivas tiene objetos homologos o envolventes que son:
+	Byte, Short, Integer, Long, Character, Float, Double and Boolean.
+Las variables primitivas se pueden convertir a objetos envolventes medianto lo que se conoce como AutoBoxing y UnBoxing
+	AutoBoxing: Es cuando el valor de una variable primitiva se asigna a un objeto Envolvente
+		Ejemplo: Integer num2 = 4;
+	UnBoxing: Es cuando el valor de un objeto Envolvente se asigna a una variable primitiva
+		Ejemplo: int num4 = Integer.valueOf(5);
+Las clases envolventes tienen metodos con los cuales pueden interactuar con valores de objetos envolventes, valores primitivos o String.
+Algunos de los metodos son:
+	parseInt() : Recibe un String y lo convierte a int.
+		Ejemplo: int numPrimitivoX = Integer.parseInt( "358" );
+	valueOf(): Puede recibir un int o un String y lo convierte a Integer.
+		Ejemplo: Integer numPrimitivoY = Integer.valueOf( "358" );
+	compare(x, y): Puede recibir valores primitivos u Objetos envolventes y devuelve un primitivo que puede ser un valor negativo si x es menor que y, devuelve cero si x es igual a y o devuelve un valor positivo si x es mayor que y.
+		Ejemplo: int compareA = Integer.compare(59, Integer.valueOf(7));
+	compareTo(): Recibe un Integer y compara a partir del objeto que se invoca el metodo. Devuelve igual que el metodo compare().
+		Ejemplo: int comapareB = Integer.valueOf(89).compareTo(Integer.valueOf(178));
+	toString(): Convierte un valor envolvente a una cadena de texto
+		Ejemplo: String textoX = Double.valueOf(3.14159).toString(); // "3.14159"
+Depende de la clase envolvente, algunas pueden tener diferentes metodos.
+
+La clase String en Java:
+	
+	La clase String es inmutable, lo que significa que una vez que un objeto String es creado, no se puede modificar su contenido. 
+	Cualquier operación que parezca modificar una cadena, en realidad, crea una nueva instancia de String con el nuevo valor. Lo que aumenta el uso de memoria.
+	Razón por la cual la clase String es inmutable:
+		Seguridad y confiabilidad: La inmutabilidad garantiza que una cadena no pueda ser modificada accidentalmente o maliciosamente, lo cual es crucial en muchas aplicaciones, especialmente en el manejo de contraseñas, datos sensibles o en entornos multihilo.
+
+		Optimización del rendimiento: Las cadenas se utilizan con mucha frecuencia en Java, por ejemplo, en la manipulación de texto, en bases de datos, etc. Al ser inmutables, se puede aprovechar el pool de cadenas de Java (String Pool), que permite almacenar cadenas constantes de forma eficiente. Si dos referencias apuntan a la misma cadena, no se necesita duplicar los datos, lo que ahorra memoria y mejora el rendimiento.
+
+		Compatibilidad con hilos (thread-safe): Al ser inmutables, los objetos String son seguros para el acceso concurrente en aplicaciones multihilo sin necesidad de sincronización adicional. Esto evita problemas de coherencia de datos en entornos multihilo.
+	
+	En caso de que se requiera cambiar el valor de un String varias veces es recomendable usar la clase StringBuilder o StringBuffer que son mutables y están diseñadas para modificar cadenas de forma más eficiente.
+	
+	Las clases StringBuilder y StringBuffer en Java son muy similares, ya que ambas se utilizan para crear y manipular cadenas de texto de manera mutable, es decir, permiten modificar el contenido de las cadenas sin crear nuevos objetos cada vez. Sin embargo, hay una diferencia clave entre ellas:
+	Diferencia en la sincronización (Thread Safety):
+		StringBuffer: Está sincronizada. Esto significa que las operaciones realizadas sobre un objeto de StringBuffer son seguros en entornos multihilo. En otras palabras, puedes utilizar un StringBuffer en aplicaciones multihilo sin preocuparte por problemas de concurrencia. Sin embargo, la sincronización introduce una pequeña sobrecarga de rendimiento, ya que se asegura de que solo un hilo pueda acceder al objeto StringBuffer a la vez.
+
+		StringBuilder: No está sincronizada. Esto significa que no es segura para entornos multihilo. Si varios hilos intentan modificar el mismo StringBuilder al mismo tiempo, podrían producirse errores o resultados inesperados. Sin embargo, al no tener la sobrecarga de la sincronización, StringBuilder es más rápido que StringBuffer en entornos de un solo hilo.
+		
+	 Desempeño:
+		StringBuffer: Debido a la sincronización, StringBuffer es más lento en comparación con StringBuilder, especialmente cuando se usa en un solo hilo.
+
+		StringBuilder: Es más rápido en operaciones de manipulación de cadenas, ya que no tiene la sobrecarga de sincronización. Esto lo hace más adecuado para entornos donde no se necesita sincronización, como cuando se usa en aplicaciones de un solo hilo.
+	
+	Usos típicos:
+		StringBuffer: Se utiliza cuando necesitas manipular cadenas de texto en un entorno multihilo y se requiere que la operación de modificación de cadenas sea segura. Aunque la sincronización garantiza seguridad, debes tener en cuenta el costo de rendimiento asociado.
+
+		StringBuilder: Se utiliza cuando se manipulan cadenas en un contexto de un solo hilo, donde la velocidad es más importante que la seguridad en un entorno multihilo. Es ideal para situaciones en las que sabes que la cadena no será modificada por varios hilos al mismo tiempo.
+	
+	Metodos mas utilizados de la clase String:
+		length(): Devuelve la longitud de la cadena.
+			Ejemplo: String str = "Hola";
+					 int longitud = str.length();  // 4
+		charAt(int index): Devuelve el carácter en la posición especificada.
+			Ejemplo: String str = "Hola";
+					 char c = str.charAt(1);  // 'o'
+		substring(int beginIndex): Devuelve una nueva cadena que comienza desde el índice especificado hasta el final de la cadena.
+			Ejemplo: String str = "Hola Mundo";
+					 String sub = str.substring(5);  // "Mundo"
+		substring(int beginIndex, int endIndex): Devuelve una subcadena desde el índice beginIndex hasta endIndex - 1.
+			Ejemplo: String str = "Hola Mundo";
+					 String sub = str.substring(0, 4);  // "Hola"
+		indexOf(String str): Devuelve la posición de la primera aparición de una subcadena.
+			Ejemplo: String str = "Hola Mundo";
+					 int index = str.indexOf("Mundo");  // 5
+		equals(String anotherString): Compara dos cadenas de texto y devuelve true si son iguales, false si no lo son (compara contenido).
+			Ejemplo: String str1 = "Hola";
+					 String str2 = "Hola";
+					 boolean esIgual = str1.equals(str2);  // true
+		equalsIgnoreCase(String anotherString): Compara dos cadenas de texto ignorando las diferencias entre mayúsculas y minúsculas.
+			Ejemplo: String str1 = "Hola";
+					 String str2 = "hola";
+					 boolean esIgual = str1.equalsIgnoreCase(str2);  // true
+		toUpperCase(): Devuelve una nueva cadena en mayúsculas.
+			Ejemplo: String str = "hola";
+					 String mayusculas = str.toUpperCase();  // "HOLA"
+		toLowerCase(): Devuelve una nueva cadena en minúsculas.
+			Ejemplo: String str = "HOLA";
+					 String minusculas = str.toLowerCase();  // "hola"
+		trim(): Elimina los espacios en blanco al inicio y al final de la cadena.
+			Ejemplo: String str = "   Hola Mundo   ";
+					 String sinEspacios = str.trim();  // "Hola Mundo"
+		replace(char oldChar, char newChar): Reemplaza todas las ocurrencias de un carácter específico por otro.
+			Ejemplo: String str = "Hola Mundo";
+					 String nuevoStr = str.replace('o', 'a');  // "Hala Munda"
+		replaceAll(String regex, String replacement): Reemplaza todas las subcadenas que coinciden con una expresión regular por un nuevo texto.
+			Ejemplo: String str = "Hola Mundo";
+					 String nuevoStr = str.replaceAll("Mundo", "Java");  // "Hola Java"
+		split(String regex): Divide la cadena en un array de cadenas, usando una expresión regular como delimitador.
+			Ejemplo: String str = "Hola Mundo";
+					 String[] palabras = str.split(" ");  // ["Hola", "Mundo"]
+		contains(CharSequence sequence): Verifica si una cadena contiene una subcadena específica.
+			Ejemplo: String str = "Hola Mundo";
+					 boolean contiene = str.contains("Mundo");  // true
+		startsWith(String prefix): Verifica si la cadena comienza con el prefijo especificado.
+			Ejemplo: String str = "Hola Mundo";
+					 boolean empiezaCon = str.startsWith("Hola");  // true
+		endsWith(String suffix): Verifica si la cadena termina con el sufijo especificado.
+			Ejemplo: String str = "Hola Mundo";
+					 boolean terminaCon = str.endsWith("Mundo");  // true
+		isEmpty(): Devuelve true si la cadena está vacía (su longitud es 0).
+			Ejemplo: String str = "";
+					 boolean vacio = str.isEmpty();  // true
+		valueOf(boolean b): Convierte un valor booleano (int, long, char, double, float, Object) en una cadena.
+			Ejemplo: boolean b = true;
+					 String str = String.valueOf(b);  // "true"
+		format(String format, Object... args): Permite formatear una cadena utilizando un patrón y un conjunto de parámetros.
+			Ejemplo: String str = String.format("Hola %s", "Mundo");  // "Hola Mundo"
+		compareTo(String anotherString): Devuelve 0 si las cadenas son iguales. Un valor negativo si la cadena que invoca el método es lexicográficamente menor que la cadena comparada. Un valor positivo si la cadena que invoca el método es lexicográficamente mayor que la cadena comparada.
+			Ejemplo: String cadenaA = "Java";
+					 String cadenaB = "Java 45";
+					 int valorString = cadenaA.compareTo(cadenaB);   /**valor negativo */
+Polimorfismo en Java:
+	Es uno de los pilares de la programación orientada a objetos (POO) y permite que un objeto pueda tomar muchas formas. En Java, el polimorfismo se puede manifestar de varias formas y se puede clasificar principalmente en dos tipos:
+	Polimorfismo en tiempo de compilación (Estático): Se refiere a la sobrecarga de métodos y constructores.
+		La sobrecarga de metodos o de constructores se da cuando un metodo se redefine siempre y cuando se cambie el valor de retorno y/o la firma del metodo, es decir, el numero de parametros que recibe o el tipo de parametros.
+	Polimorfismo en tiempo de ejecución (Dinámico): Se refiere a la sobrescritura de métodos y se gestiona mediante la herencia y la interfaz.
+		La sobrescritura de métodos ocurre cuando una clase hija proporciona una implementación específica de un método que ya ha sido definido en su clase padre. Este es el tipo de polimorfismo más común en Java.
+	
+	En Java, también es posible lograr polimorfismo mediante interfaces. Las clases que implementan una misma interfaz pueden tener diferentes implementaciones de los métodos de la interfaz, lo que permite que se puedan tratar de manera polimórfica.
+	
+Pilares de la programacion orientada a objetos
+		Encapsulamiento: Ocultar los detalles internos de un objeto y exponer solo lo necesario mediante métodos.
+		Herencia: Permitir que una clase herede comportamientos y propiedades de otra clase, facilitando la reutilización y extensión del código.
+		Polimorfismo: Permitir que un objeto se comporte de diferentes maneras según el contexto, lo que mejora la flexibilidad y reutilización del código.
+		Abstracción: Ocultar los detalles de implementación y mostrar solo la funcionalidad esencial a través de clases abstractas e interfaces.
+
+Clases Abstractas e Interfaces
+	Una clase abstracta es una clase que no puede ser instanciada directamente. Puede contener métodos abstractos (sin implementación) que las subclases deben implementar, o puede tener métodos concretos (con implementación). También puede tener atributos y métodos no abstractos.
+	Características de una clase abstracta:
+		No se puede crear una instancia de una clase abstracta directamente.
+		Puede contener tanto métodos abstractos (sin implementacion) como métodos concretos (con implementación).
+		Puede tener atributos (pueden ser private, protected, public) y constructores.
+		Los métodos pueden ser private, protected, o public.
+		Una clase puede extender solo una clase abstracta.
+		Se usa cuando quieres proporcionar una base común de comportamiento y estructura para otras clases.
+		Se usa para compartir comportamiento común entre clases.
+	
+	Interfaces en Java 11
+		Las interfaces en Java definen un conjunto de métodos abstractos que una clase debe implementar. A partir de Java 8, las interfaces pueden contener métodos con implementación (usando la palabra clave default) y métodos estáticos.
+	Características de una interfaz:
+		No puede tener implementaciones de métodos (excepto métodos default y static).
+		Puede tener solo constantes y métodos default y static con implementación.
+		Las clases pueden implementar múltiples interfaces.
+		Los métodos en una interfaz son por defecto públicos.
+		Métodos default: Introducidos en Java 8, permiten proporcionar implementaciones en interfaces.
+		Métodos static: También introducidos en Java 8, permiten definir métodos estáticos con implementacion en una interfaz.
+		No puede tener constructores.
+		Se usa para definir un comportamiento que las clases deben cumplir.
+
+Modificadores de acceso
+	Son palabras clave que definen el nivel de visibilidad de las clases, métodos, atributos y otros miembros dentro de un programa. Los modificadores de acceso controlan desde qué otros lugares en el código se pueden acceder a dichos miembros. Hay cuatro tipos principales de modificadores de acceso en Java:
+		public:
+			El miembro de la clase es accesible desde cualquier otra clase, sin importar el paquete en el que se encuentre.
+			Se utiliza para exponer funcionalidades que deben ser accesibles globalmente.
+		private:
+			El miembro de la clase es accesible solo dentro de la misma clase.
+			No se puede acceder a él desde fuera de la clase, ni siquiera desde clases que hereden de ella.
+			Se utiliza para ocultar la implementación interna de la clase y proteger sus datos.
+		protected:
+			El miembro de la clase es accesible dentro del mismo paquete y en las subclases (incluso si las subclases están en paquetes diferentes).
+			Se utiliza cuando deseas permitir que las subclases accedan a los miembros de la clase base, pero sin hacerlos públicos.
+		default:
+			Si no se especifica ningún modificador de acceso, el miembro tiene acceso por defecto (package-private).
+			El acceso por defecto permite que el miembro sea accesible solo desde otras clases dentro del mismo paquete. No es accesible fuera del paquete.
+Lambdas en Java
+	Las expresiones lambda en Java son una forma de pasar funciones como parámetros o de definir implementaciones de interfaces funcionales de una forma más concisa. Son especialmente útiles para trabajar con APIs que operan sobre colecciones, como el Stream API, y para proporcionar una mayor claridad y reducir el código boilerplate.
+	
+	Una expresión lambda es una forma de representar una función anónima (sin nombre) que puede ser pasada como parámetro o utilizada en un lugar donde se espera una interfaz funcional (es decir, interfaces con un solo método abstracto).
+	
+	Las lambdas te permiten reducir la cantidad de código y mejorar la legibilidad, especialmente en escenarios donde se utiliza mucho código repetitivo, como al implementar interfaces funcionales.
+	
+	Tipos de Lambdas:
+		//a. Lambda sin parámetros: Este tipo de lambda se usa cuando la interfaz funcional no requiere parámetros. Un ejemplo clásico es el uso de Runnable.
+		//b. Lambda con un solo parámetro: Si la interfaz funcional tiene un solo parámetro, la lambda puede ser escrita sin paréntesis, 
+			//pero si prefieres ser más explícito, puedes incluir los paréntesis.
+			//Una lambda con un solo parámetro es usada frecuentemente con interfaces como Consumer o Function.
+		//c. Lambda con múltiples parámetros: Cuando la interfaz funcional tiene más de un parámetro, debes declarar todos los parámetros entre paréntesis y
+			// y se usa con interfaces como BiFunction o BiPredicate.
+			//En Java 11, también se puede aprovechar el uso de var para que el tipo sea inferido, pero en este caso, para ser más explícitos, no lo usamos.
+		//d. Lambda con varias sentencias (bloque de código): Si el cuerpo de la lambda contiene varias sentencias, debes usar llaves {}.
+			// Si se necesita un valor de retorno, se debe incluir return.
+		//e. Lambda con tipo de parámetro explícito
+			//Puedes especificar los tipos de los parámetros explícitamente, aunque normalmente Java infiere los tipos.
+		//f. Lambda con tipo de retorno explícito
+			//En algunas ocasiones, como con funciones que devuelven valores, puedes usar un tipo de retorno explícito.
+	
+	Uso de lambdas con colecciones en Java 11:
+		Java 11 introduce algunas mejoras en la API de colecciones, como el método List.of() para crear listas inmutables, pero las lambdas siguen siendo una herramienta muy útil para trabajar con flujos de datos (Streams) y colecciones.
+
+Colecciones en Java
+	Las colecciones son estructuras de datos que te permiten almacenar y gestionar un conjunto de elementos. Estas colecciones forman parte del Java Collections Framework, que proporciona una serie de interfaces y clases para trabajar con datos de manera flexible y eficiente.
+
+	Las colecciones en Java están divididas principalmente en tres grupos:	
+		Colecciones de tipo lista (List): Mantienen el orden de los elementos y permiten elementos duplicados.
+		Colecciones de tipo conjunto (Set): No permiten elementos duplicados y no mantienen un orden en los elementos.
+		Colecciones de tipo mapa (Map): Almacenan pares clave-valor, donde cada clave es única.
+		Queue (Cola):
+			Las colas son colecciones que siguen el principio FIFO (First In, First Out). Java proporciona la interfaz Queue y la implementación más común es LinkedList.
+		Deque (Cola doble):
+			Un Deque (Double Ended Queue) permite añadir o eliminar elementos desde ambos extremos. La implementación más común es ArrayDeque.
+
+Estructuras de Datos
+	Las estructuras de datos en Java se dividen en varias categorías, como las estructuras lineales (listas, pilas, colas) y estructuras no lineales (árboles, grafos). A continuación, te proporcionaré un resumen de las más comunes y sus implementaciones en Java.
+	
+	1. Estructuras de Datos Lineales:
+		a. Array (Arreglo)
+			Un arreglo es una estructura de datos básica que almacena elementos del mismo tipo en posiciones contiguas de memoria. En Java, los arreglos son de tamaño fijo, lo que significa que debes definir su tamaño en el momento de la creación.
+		b. ArrayList
+			ArrayList es una de las implementaciones más comunes de la interfaz List en Java. Es dinámico, lo que significa que puede crecer o reducir su tamaño automáticamente cuando se agregan o eliminan elementos.
+		c. LinkedList
+			LinkedList es otra implementación de la interfaz List, pero a diferencia de ArrayList, utiliza nodos que contienen elementos y referencias (enlaces) al siguiente y anterior nodo. Es más eficiente para insertar o eliminar elementos en cualquier parte de la lista, pero menos eficiente para acceder por índice.
+		d. Stack (Pila)
+			La pila es una estructura de datos que sigue el principio LIFO (Last In, First Out), es decir, el último elemento en entrar es el primero en salir. En Java, la clase Stack implementa esta estructura de datos.
+	2. Estructuras de Datos No Lineales
+		a. Árboles
+			Un árbol es una estructura jerárquica de datos en la que cada elemento (llamado nodo) tiene un valor y cero o más nodos hijos. El nodo principal se llama "raíz", y cada nodo tiene un único padre.
+		b. Grafos
+			Un grafo es una colección de nodos (o vértices) conectados por aristas. Los grafos pueden ser dirigidos (con una dirección en las aristas) o no dirigidos.
+	3. Otras estructuras de datos útiles
+		HashMap: Es una estructura basada en tablas hash que almacena pares clave-valor y permite un acceso rápido a los valores a través de sus claves.
+		PriorityQueue: Una cola de prioridad en la que cada elemento tiene una "prioridad". El elemento con mayor prioridad se obtiene primero.	
+
+Static en Java
+	Una clase estática en Java es una clase que sólo puede contener métodos estáticos, variables y clases anidadas. No podemos crear objetos de una clase estática y solo podemos acceder a sus miembros utilizando el nombre de la clase.
+		1. Clase interna estática
+			Una clase interna estática es una clase definida dentro de otra clase y marcada con el modificador static. Puede ser útil cuando la clase interna no necesita acceder a los miembros no estáticos de la clase externa.
+		2. Miembros estáticos en una clase
+			Cuando un miembro (variable o método) está declarado como static, significa que pertenece a la clase en lugar de a una instancia específica de esa clase. Los miembros estáticos se pueden acceder sin crear una instancia de la clase.
+	Static Nested Classes se usa para optimizar la memoria al no tener la necesidad de crear una instancia y poder trabajar directamente con la
+	clase.
+	static tambien se usa para variables o metodos para que puedan ser accedidos por medio de la clase y no por una instancia. Esto puede tener
+	un proposito global para que todas las clases puedan hacer uso de estos miembros como utilerias o configuraciones.
+
+Final en Java
+	Se utiliza para indicar que algo no puede ser modificado o alterado después de su asignación o declaración.
+	1. final en Variables:
+		Cuando se declara una variable como final, su valor no puede cambiar una vez que se ha asignado. Es decir, una vez que se le da un valor, no puede ser modificado.
+		Ejemplo: final int CONSTANT = 10;
+	2. final en Métodos:
+		Cuando un método es declarado como final, significa que el método no puede ser sobrescrito (overridden) en las clases derivadas. Es útil cuando quieres asegurarte de que un comportamiento específico de un método no cambie en las subclases.
+	3. final en Clases
+		Cuando una clase es declarada como final, significa que no puede ser extendida (es decir, no puede tener subclases). Esto es útil para evitar que otras clases modifiquen el comportamiento de una clase que deseas que se mantenga constante.
+	4. final en Parámetros de Métodos
+		Cuando se declara un parámetro de un método como final, significa que el valor del parámetro no puede ser modificado dentro del método. Esto es útil para garantizar que los parámetros no cambien accidentalmente dentro del cuerpo del método.
+	
+Excepciones en Java
+	Las excepciones en Java se dividen principalmente en dos categorías:
+		Excepciones verificadas (Checked Exceptions): Son aquellas que el compilador exige que sean manejadas. Si no se manejan correctamente, el programa no se compilará. Por ejemplo, cuando intentamos abrir un archivo que no existe o una conexión a una base de datos falla.
+		Excepciones no verificadas (Unchecked Exceptions): Son aquellas que no requieren ser declaradas o manejadas explícitamente. Generalmente, están relacionadas con errores de programación, como dividir por cero o acceder a un índice fuera del rango del array.
+		Errores (Errors): Son situaciones graves que usualmente no se pueden manejar, como problemas de memoria.
+	
+	En Java, las excepciones se manejan utilizando los bloques try, catch, finally y la palabra clave throw para lanzar excepciones manualmente:
+		try: Se utiliza para encapsular el código que puede generar una excepción.
+		catch: Se usa para manejar la excepción que se lanza en el bloque try.
+		finally: Se ejecuta siempre, haya o no ocurrido una excepción, útil para cerrar recursos como archivos o conexiones.
+		throw: Se utiliza para lanzar una excepción de manera explícita.
+		
+Pruebas unitarias en Java
+	Las pruebas unitarias en Java son una técnica de prueba de software que consiste en verificar que las unidades más pequeñas de código, como métodos o clases, funcionen correctamente. En este tipo de pruebas, se verifica que cada parte del código cumpla con su función de manera independiente y aislada.
+
+	Se suelen realizar con herramientas como JUnit, que es el marco de pruebas más común en Java. JUnit permite escribir y ejecutar pruebas automáticas que validan el comportamiento de los métodos de las clases.
+	
+	Conceptos clave de las pruebas unitarias:
+		Test Method: Es una función que prueba una unidad de código específica (por ejemplo, un método). Cada prueba debe ser independiente y contener los pasos necesarios para verificar el comportamiento esperado.
+		Assertions: Son afirmaciones que comparan el resultado de una operación con el valor esperado. Si la afirmación es falsa, la prueba falla.
+		Test Class: Una clase que contiene varias pruebas unitarias.
+		Fixtures: Son configuraciones previas necesarias para realizar las pruebas, como crear objetos o preparar datos.
+
+Garbage Collector, como funciona
+
+Patrones de Diseño
+
+Spring boot
+
+Spring MVC
+
+Inyeccion de dependencias
+
+Inversion de control
+
+Bean y su scope
+
+property file
+
+como consumir apis en codigo
+
+principios solid
+
+Spring JPA vs Spring JDBC.
+Spring con Kafka
+Spring con RabitMQ
+Spring con ActiveMQ
+
+
